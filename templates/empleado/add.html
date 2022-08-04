@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Agregar Empleado
+{% endblock title %}
+
+
+{% block contenido %}
+    {% include 'includes/header.html' %}
+    <div class="container">
+        <div class="row">
+            <h1>Agregar Empleado</h1>
+        </div>
+        <form method="POST"  class="card " autocomplete="off" enctype =  "multipart/form-data">
+            {% csrf_token %}
+            <div class="row p-2">
+              <div class="col">
+                  <label>Nombre</label>
+                  {{form.first_name}}
+              </div>
+              <div class="col">
+                  <label>Apellidos</label>
+                  {{form.last_name}}
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col">
+                  <label>Dni</label>
+                  {{form.dni}}
+              </div>
+              <div class="col">
+                  <label>Edad</label>
+                  {{form.edad}}
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col">
+                  <label>Telefono</label>
+                  {{form.phone}}
+              </div>
+              <div class="col">
+                  <label>Area</label>
+                  {{form.area}}
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col">
+                  <label>Foto</label><br>
+                  {{form.avatar}}
+              </div>
+            </div>
+            <div class="row align-items-end p-2">
+                <div class="col " >
+                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp Agregar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock contenido %}
+    
+    

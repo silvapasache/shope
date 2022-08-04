@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Empleados
+{% endblock title %}
+    
+
+{% block contenido %}
+    {% include 'includes/header.html' %}
+    <div class="container">
+        <div class="row">
+            <h1>Lista de empleados</h1>
+        </div>
+        <form method="GET" class="row g-3" autocomplete="off">
+            <div class="col-5">
+                <input type="text"  class="form-control" id="kword" name="kword" placeholder="Nombres o Dni">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success mb-3">Buscar</button>
+            </div>
+        </form>
+    <!--inicio de tabla-->
+    <table class="table default">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>edad</th>
+          <th>DNI</th>
+          <th>Telefono</th>
+          <th>Accion</th>
+        </tr>
+        {% for e in Empleados %}
+        <tr>  
+            <td>{{e.id}}</td>
+            <td>{{e.first_name}}</td>
+            <td>{{e.last_name}}</td>
+            <td>{{e.edad}}</td>
+            <td>{{e.dni}}</td>
+            <td>{{e.phone}}</td>
+            <td>
+                <a class="btn btn-danger" href="{% url 'empleado_app:delete_job' e.id %}"><i class="fa-solid fa-trash-can"></i> Delete</a>
+                <a class="btn btn-warning" href="{% url 'empleado_app:update_empleado' e.id %}">
+                    <i class="fa-solid fa-pencil"></i> Edit
+                </a>
+                <a class="btn btn-success" href="{% url 'empleado_app:detail_empleado' e.id %}">
+                    <i class="fa-solid fa-eye"></i> Ver
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+      
+    </table>
+    <!--fin de tabla-->
+    <!--INICIO paginacion-->
+    
+    {% if is_paginated %}
+    <nav aria-label="...">
+        <ul class="pagination">
+            
+        {% if  page_obj.has_previous %}  
+            <li class="page-item ">
+                <a class="page-link" href="?page={{page_obj.previus_page_number}}"><i class="fa-solid fa-angles-left"></i> </a>
+            </li>
+        {% endif %}
+        
+        {% for p in paginator.page_range %}
+        
+            {% ifequal  p page_obj.number  %} 
+            <li class="page-item active">
+                <a class="page-link" href="?page={{p}}">{{p}}</a>
+            </li>
+            {% else %}
+            <li class="page-item ">
+                <a class="page-link" href="?page={{p}}">{{p}}</a>
+            </li>
+            {% endifequal %}
+            
+        {% endfor %}
+          
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.next_page_number}}"><i class="fa-solid fa-angles-right"></i></a>
+            </li>
+        {% endif %}
+              
+        </ul>
+      </nav>
+    {% endif %}
+    <!--FIN paginacion-->
+    </div>
+{% endblock contenido %}
+    
